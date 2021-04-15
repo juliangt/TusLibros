@@ -26,4 +26,17 @@ class CartTest extends TestCase
 
     }
 
+    public function testCanGetAddedBook()
+    {
+        $cart = new Cart();
+
+        $book1 = new Book(1);
+        $book2 = new Book(2);
+
+        $cart->addBook($book1);
+
+        $this->assertEquals( $book1->getId(), $cart->getBook()->getId() );
+        $this->assertNotEquals( $book2->getId(), $cart->getBook()->getId() );
+    }
+
 }
