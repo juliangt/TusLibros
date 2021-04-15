@@ -5,8 +5,8 @@ namespace App\Entity;
 class Cart
 {
 
-    public function getItems()  {
-        return 0;
+    public function isEmpty()  {
+        return true;
     }
 
 }

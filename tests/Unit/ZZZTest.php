@@ -11,9 +11,9 @@ class ZZZTest extends TestCase
     {
         $cart = new Cart();
 
-        $this::assertInstanceOf(CART::class, $cart);
-        $this::assertTrue(0 == $cart->getItems());
+        $this::assertTrue($cart->isEmpty());
 
     }
+
 
 }
