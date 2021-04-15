@@ -85,15 +85,4 @@ class CartTest extends TestCase
 
     }
 
-    public function testCanCheckoutCreatedCart()
-    {
-        $cart = new Cart();
-
-        $book1 = new Book(1);
-
-        $cart->addBook($book1, 10);
-
-        $this->assertTrue($cart->checkout());
-        $this->assertEquals('SUCCESS', $cart->getStatus());
-    }
 }
