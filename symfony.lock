@@ -2,6 +2,9 @@
     "doctrine/instantiator": {
         "version": "1.4.0"
     },
+    "monolog/monolog": {
+        "version": "1.26.0"
+    },
     "myclabs/deep-copy": {
         "version": "1.10.2"
     },
@@ -125,6 +128,21 @@
     "symfony/debug": {
         "version": "v4.3.11"
     },
+    "symfony/debug-bundle": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.1",
+            "ref": "f8863cbad2f2e58c4b65fa1eac892ab189971bea"
+        },
+        "files": [
+            "config/packages/dev/debug.yaml"
+        ]
+    },
+    "symfony/debug-pack": {
+        "version": "v1.0.9"
+    },
     "symfony/dependency-injection": {
         "version": "v4.3.11"
     },
@@ -183,6 +201,24 @@
     "symfony/mime": {
         "version": "v4.3.11"
     },
+    "symfony/monolog-bridge": {
+        "version": "v4.3.11"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "d7249f7d560f6736115eee1851d02a65826f0a56"
+        },
+        "files": [
+            "config/packages/dev/monolog.yaml",
+            "config/packages/prod/deprecations.yaml",
+            "config/packages/prod/monolog.yaml",
+            "config/packages/test/monolog.yaml"
+        ]
+    },
     "symfony/polyfill-intl-idn": {
         "version": "v1.22.1"
     },
@@ -197,6 +233,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.22.1"
+    },
+    "symfony/profiler-pack": {
+        "version": "v1.0.5"
     },
     "symfony/routing": {
         "version": "4.2",
@@ -215,14 +254,58 @@
     "symfony/service-contracts": {
         "version": "v1.1.9"
     },
+    "symfony/stopwatch": {
+        "version": "v4.3.11"
+    },
+    "symfony/translation-contracts": {
+        "version": "v1.1.10"
+    },
+    "symfony/twig-bridge": {
+        "version": "v4.3.11"
+    },
+    "symfony/twig-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "7e5381cd17e0e27d1b432af9230b65060b75ac4c"
+        },
+        "files": [
+            "config/packages/test/twig.yaml",
+            "config/packages/twig.yaml",
+            "config/routes/dev/twig.yaml",
+            "templates/base.html.twig"
+        ]
+    },
+    "symfony/var-dumper": {
+        "version": "v4.3.11"
+    },
     "symfony/var-exporter": {
         "version": "v4.3.11"
+    },
+    "symfony/web-profiler-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
+        },
+        "files": [
+            "config/packages/dev/web_profiler.yaml",
+            "config/packages/test/web_profiler.yaml",
+            "config/routes/dev/web_profiler.yaml"
+        ]
     },
     "symfony/yaml": {
         "version": "v4.3.11"
     },
     "theseer/tokenizer": {
         "version": "1.2.0"
+    },
+    "twig/twig": {
+        "version": "v2.14.4"
     },
     "webmozart/assert": {
         "version": "1.10.0"
