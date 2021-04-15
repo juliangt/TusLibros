@@ -18,11 +18,11 @@ class CartTest extends TestCase
     public function testCanAddBookToCart(){
         $cart = new Cart();
 
-        $book = new Book();
+        $book = new Book(1);
 
         $cart->addBook($book);
 
-        $this->assertInstanceOf(Book::class,$cart->getBook());
+        $this->assertInstanceOf(Book::class,$cart->getBooks()[0]);
 
     }
 
@@ -35,8 +35,25 @@ class CartTest extends TestCase
 
         $cart->addBook($book1);
 
-        $this->assertEquals( $book1->getId(), $cart->getBook()->getId() );
-        $this->assertNotEquals( $book2->getId(), $cart->getBook()->getId() );
+        $this->assertEquals( $book1->getId(), $cart->getBooks()[0]->getId() );
+        $this->assertNotEquals( $book2->getId(), $cart->getBooks()[0]->getId() );
+    }
+
+    public function testCanGetMoreThanOneBook(){
+        $cart = new Cart();
+
+        $book1 = new Book(1);
+        $book2 = new Book(2);
+
+        $cart->addBook($book1);
+
+        $cart->addBook($book2);
+
+        $books = $cart->getBooks();
+
+        $this->assertEquals( $book1->getId(), $books[0]->getId() );
+        $this->assertEquals( $book2->getId(), $books[1]->getId() );
+
     }
 
 }

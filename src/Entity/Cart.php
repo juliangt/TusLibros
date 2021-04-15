@@ -5,18 +5,21 @@ use App\Entity\Book;
 
 class Cart
 {
-    private $book;
+    private $books = [];
 
-    public function isEmpty() {
-        return true;
+    public function isEmpty()
+    {
+        return count($this->books) == 0;
     }
 
-    public function addBook(Book $book) {
-        $this->book = $book;
+    public function addBook(Book $book)
+    {
+        $this->books[] = $book;
     }
 
-    public function getBook(){
-        return $this->book;
+    public function getBooks() :array
+    {
+        return $this->books;
     }
 
 }
