@@ -15,6 +15,16 @@ class CartTest extends TestCase
         $this->assertTrue($cart->isEmpty());
     }
 
+    public function testCartIsNotEmptyAfterAddingAProduct(){
+        $cart = new Cart();
+
+        $book = new Book(1);
+
+        $cart->addBook($book, 1);
+
+        $this->assertFalse($cart->isEmpty());
+    }
+
     public function testCanAddBookToCart(){
         $cart = new Cart();
 
@@ -23,7 +33,6 @@ class CartTest extends TestCase
         $cart->addBook($book, 1);
 
         $this->assertInstanceOf(Book::class, $cart->getItems()[0]->getBook());
-
     }
 
     public function testCanGetAddedBook()
@@ -37,6 +46,14 @@ class CartTest extends TestCase
 
         $this->assertEquals( $book1->getId(), $cart->getItems()[0]->getBook()->getId() );
         $this->assertNotEquals( $book2->getId(), $cart->getItems()[0]->getBook()->getId() );
+    }
+
+    public function testCartDoesNotIncludeNotAddedProducts(){
+        $cart = new Cart();
+
+        $book1 = new Book(1);
+
+        $this->assertTrue( $cart->isEmpty());
     }
 
     public function testCanGetMoreThanOneBook(){
@@ -66,5 +83,17 @@ class CartTest extends TestCase
 
         $this->assertEquals( 10, $items[0]->getQuantity() );
 
+    }
+
+    public function testCanCheckoutCreatedCart()
+    {
+        $cart = new Cart();
+
+        $book1 = new Book(1);
+
+        $cart->addBook($book1, 10);
+
+        $this->assertTrue($cart->checkout());
+        $this->assertEquals('SUCCESS', $cart->getStatus());
     }
 }
