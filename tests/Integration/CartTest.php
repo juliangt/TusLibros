@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Entity\Card;
 use App\Entity\Cashier;
 use PHPUnit\Framework\TestCase;
 use App\Entity\Cart;
@@ -57,6 +58,19 @@ class CartTest extends TestCase
         $this->assertEquals(2,$cart->numberOf($this->validProduct()));
     }
 
+    public function testAddSameBookUpdatesCartItemQuantity()
+    {
+        $cart = $this->createCartWithCatalog();
+        $cart->add($this->validProduct(),2);
+
+        $this->assertEquals( 2 , $cart->numberOf($this->validProduct()) );
+
+        $cart->add($this->validProduct(),3);
+
+        $this->assertEquals( 5 , $cart->numberOf($this->validProduct()) );
+
+    }
+
     public function testCheckoutEmptyCart(){
         $cart = $this->createCartWithCatalog();
 
@@ -75,31 +89,21 @@ class CartTest extends TestCase
             $this->checkoutCartExpiredCC($cart);
             $this->fail();
         } catch (\Exception $exception) {
-            $this->assertEquals(Cashier::INVALID_CARD_IN_CHECKOUT, $exception->getMessage());
+            $this->assertEquals(Card::INVALID_CARD_IN_CHECKOUT, $exception->getMessage());
         }
     }
 
-    public function testAddSameBookUpdatesCartItemQuantity()
-    {
-        $cart = $this->createCartWithCatalog();
-        $cart->add($this->validProduct(),2);
-
-        $this->assertEquals( 2 , $cart->numberOf($this->validProduct()) );
-
-        $cart->add($this->validProduct(),3);
-
-        $this->assertEquals( 5 , $cart->numberOf($this->validProduct()) );
-
-    }
 
     private function checkoutCartSuccess($cart){
         $cashier = new Cashier();
-        $cashier->checkout($cart,'4234231111231234','122021','Test Successfull');
+        $card = new Card('4234231111231234','122021','Test Successfull');
+        $cashier->checkout($cart, $card);
     }
 
     private function checkoutCartExpiredCC($cart){
         $cashier = new Cashier();
-        $cashier->checkout($cart,'4234231111231234','012021','Test Failed');
+        $card = new Card('4234231111231234','012021','Test Failed');
+        $cashier->checkout($cart, $card);
     }
 
     /**
