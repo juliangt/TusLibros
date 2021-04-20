@@ -79,14 +79,18 @@ class CartTest extends TestCase
         }
     }
 
+    public function testAddSameBookUpdatesCartItemQuantity()
+    {
+        $cart = $this->createCartWithCatalog();
+        $cart->add($this->validProduct(),2);
 
+        $this->assertEquals( 2 , $cart->numberOf($this->validProduct()) );
 
+        $cart->add($this->validProduct(),3);
 
+        $this->assertEquals( 5 , $cart->numberOf($this->validProduct()) );
 
-
-
-
-
+    }
 
     private function checkoutCartSuccess($cart){
         $cashier = new Cashier();

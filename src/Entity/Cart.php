@@ -29,16 +29,21 @@ class Cart
         return count($this->contents) == 0;
     }
 
-    public function add(Book $book, int $quantity)
+    public function add(Book $aBook, int $quantity)
     {
 
-        $this->assertProductIsInCatalog($book);
+        $this->assertProductIsInCatalog($aBook);
 
         $this->assertValidNumberOfProducts($quantity);
 
-        $cartItem = new CartItem($book, $quantity);
+        if ($this->includes($aBook) ) {
+            $bookItem = $this->get($aBook);
+            $bookItem->setQuantity( $bookItem->getQuantity() + $quantity );
 
-        $this->contents[] = $cartItem;
+        } else {
+            $cartItem = new CartItem($aBook, $quantity);
+            $this->contents[] = $cartItem;
+        }
 
     }
 
@@ -46,6 +51,15 @@ class Cart
     {
         if ($this->includes($aProduct)) {
             $this->prices[$aProduct] = $price;
+        }
+    }
+
+    public function get($aBook)
+    {
+        foreach ($this->contents as $bookItem) {
+            if ($bookItem->getBook()->getIsbn() == $aBook->getIsbn()) {
+                return $bookItem;
+            }
         }
     }
 
