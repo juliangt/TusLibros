@@ -58,14 +58,34 @@ class CartTest extends TestCase
 
     public function testCheckoutEmptyCart(){
         $cart = $this->createCartWithCatalog();
-        $cashier = new Cashier();
 
         try {
-            $cashier->checkout($cart);
+            $this->checkoutCartSuccess($cart);
             $this->fail();
         } catch (\Exception $exception) {
             $this->assertEquals(Cashier::INVALID_CART_STATUS_IN_CHECKOUT, $exception->getMessage());
         }
+    }
+
+    public function testCheckoutWithExpiredCC(){
+        $cart = $this->createCartWithCatalog();
+        $cart->add($this->validProduct(),2);
+        try {
+            $this->checkoutCartExpiredCC($cart);
+            $this->fail();
+        } catch (\Exception $exception) {
+            $this->assertEquals(Cashier::INVALID_CARD_IN_CHECKOUT, $exception->getMessage());
+        }
+    }
+
+    private function checkoutCartSuccess($cart){
+        $cashier = new Cashier();
+        $cashier->checkout($cart,'4234231111231234','122021','Test Successfull');
+    }
+
+    private function checkoutCartExpiredCC($cart){
+        $cashier = new Cashier();
+        $cashier->checkout($cart,'4234231111231234','012021','Test Failed');
     }
 
     /**
