@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Entity\Cashier;
 use PHPUnit\Framework\TestCase;
 use App\Entity\Cart;
 
@@ -53,6 +54,18 @@ class CartTest extends TestCase
         $cart = $this->createCartWithCatalog();
         $cart->add($this->validProduct(),2);
         $this->assertEquals(2,$cart->numberOf($this->validProduct()));
+    }
+
+    public function testCheckoutEmptyCart(){
+        $cart = $this->createCartWithCatalog();
+        $cashier = new Cashier();
+
+        try {
+            $cashier->checkout($cart);
+            $this->fail();
+        } catch (\Exception $exception) {
+            $this->assertEquals(Cashier::INVALID_CART_STATUS_IN_CHECKOUT, $exception->getMessage());
+        }
     }
 
     /**
