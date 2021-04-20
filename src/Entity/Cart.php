@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Book;
+use App\Entity\CartItem;
+
 class Cart
 {
     const INVALID_PRODUCT = "Product not in catalog";
@@ -9,6 +12,7 @@ class Cart
 
     private $contents = [];
     private $catalog = [];
+    private $prices = [];
 
     /**
      * Cart constructor.
@@ -25,39 +29,63 @@ class Cart
         return count($this->contents) == 0;
     }
 
-    public function add($book, $quantity)
+    public function add(Book $book, int $quantity)
     {
 
         $this->assertProductIsInCatalog($book);
 
         $this->assertValidNumberOfProducts($quantity);
 
-        for($i=0;$i<$quantity;$i++)
-            array_push($this->contents, $book);
+        $cartItem = new CartItem($book, $quantity);
+
+        $this->contents[] = $cartItem;
 
     }
 
-    public function includes($aProduct)
+    public function setPrice($aProduct, float $price)
     {
-        return in_array($aProduct,$this->contents);
+        if ($this->includes($aProduct)) {
+            $this->prices[$aProduct] = $price;
+        }
     }
 
-    public function numberOf($aProduct)
+    public function includes($aBook)
     {
-        $productNumbers = array_count_values($this->contents);
-        if(array_key_exists($aProduct,$productNumbers))
-            return $productNumbers[$aProduct];
-        else
-            return 0;
+        foreach ($this->contents as $bookItem) {
+            if ($bookItem->getBook()->getIsbn() == $aBook->getIsbn()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function numberOf($aBook) : int
+    {
+        foreach ($this->contents as $bookItem) {
+            if ($bookItem->getBook()->getIsbn() == $aBook->getIsbn()) {
+                return $bookItem->getQuantity();
+            }
+        }
+
+        return 0;
     }
 
     /**
-     * @param $aProduct
+     * @param $aBook
      * @throws Exception
      */
-    public function assertProductIsInCatalog($aProduct): void
+    public function assertProductIsInCatalog(Book $aBook): void
     {
-        if (!in_array($aProduct, $this->catalog))
+        $flag = false;
+
+        foreach ($this->catalog as $bookInCatalog) {
+            if ($bookInCatalog->getIsbn() == $aBook->getIsbn()) {
+                $flag = true;
+            }
+        }
+
+        if (!$flag)
             throw new \Exception((self::INVALID_PRODUCT));
     }
 

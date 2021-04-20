@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Entity\Cashier;
 use PHPUnit\Framework\TestCase;
 use App\Entity\Cart;
+use App\Entity\Book;
 
 class CartTest extends TestCase
 {
@@ -78,6 +79,15 @@ class CartTest extends TestCase
         }
     }
 
+
+
+
+
+
+
+
+
+
     private function checkoutCartSuccess($cart){
         $cashier = new Cashier();
         $cashier->checkout($cart,'4234231111231234','122021','Test Successfull');
@@ -89,23 +99,24 @@ class CartTest extends TestCase
     }
 
     /**
-     * @return string
+     * @return Book
      */
-    public function validProduct(): string
+    public function validProduct(): Book
     {
-        return "ISBN1";
+        return new Book('ISBN1', 'Mi libro', 100.00);
+        //return "ISBN1";
     }
 
     /**
-     * @return string
+     * @return Book
      */
-    public function invalidProduct(): string
+    public function invalidProduct(): Book
     {
-        return "ISBN2";
+        return new Book('ISBN2', 'Mi segundo libro', 200.00);
     }
 
     /**
-     * @return string[]
+     * @return Book[]
      */
     public function catalog(): array
     {
