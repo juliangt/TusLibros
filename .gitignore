@@ -13,5 +13,4 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
-/.idea/codeStyles/codeStyleConfig.xml
-/.idea/sonarlint/issuestore/index.pb
+/.idea/
