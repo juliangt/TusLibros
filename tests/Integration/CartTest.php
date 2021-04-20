@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Entity\Book;
 use PHPUnit\Framework\TestCase;
 use App\Entity\Cart;
 
@@ -10,79 +9,82 @@ class CartTest extends TestCase
 {
     public function testNewCartIsEmpty()
     {
-        $cart = new Cart();
+        $cart = $this->createCartWithCatalog();
 
         $this->assertTrue($cart->isEmpty());
     }
 
     public function testCartIsNotEmptyAfterAddingAProduct(){
-        $cart = new Cart();
 
-        $book = new Book(1);
+        $cart = $this->createCartWithCatalog();
 
-        $cart->addBook($book, 1);
+        $cart->add($this->validProduct(), 1);
 
         $this->assertFalse($cart->isEmpty());
     }
 
-    public function testCanAddBookToCart(){
-        $cart = new Cart();
-
-        $book = new Book(1);
-
-        $cart->addBook($book, 1);
-
-        $this->assertInstanceOf(Book::class, $cart->getItems()[0]->getBook());
-    }
-
     public function testCanGetAddedBook()
     {
-        $cart = new Cart();
+        $cart = $this->createCartWithCatalog();
 
-        $book1 = new Book(1);
-        $book2 = new Book(2);
+        $cart->add($this->validProduct(),1);
 
-        $cart->addBook($book1,1);
-
-        $this->assertEquals( $book1->getId(), $cart->getItems()[0]->getBook()->getId() );
-        $this->assertNotEquals( $book2->getId(), $cart->getItems()[0]->getBook()->getId() );
+        $this->assertTrue( $cart->includes($this->validProduct()));
     }
 
     public function testCartDoesNotIncludeNotAddedProducts(){
-        $cart = new Cart();
+        $cart = $this->createCartWithCatalog();
 
-        $book1 = new Book(1);
+        $cart->add($this->validProduct(),1);
 
-        $this->assertTrue( $cart->isEmpty());
+        $this->assertFalse( $cart->includes($this->invalidProduct() ));
     }
 
     public function testCanGetMoreThanOneBook(){
-        $cart = new Cart();
+        $cart = $this->createCartWithCatalog();
 
-        $book1 = new Book(1);
-        $book2 = new Book(2);
+        $cart->add($this->validProduct(), 2);
 
-        $cart->addBook($book1, 1);
-
-        $cart->addBook($book2, 1);
-
-        $this->assertEquals( $book1->getId(), $cart->getItems()[0]->getBook()->getId() );
-        $this->assertEquals( $book2->getId(), $cart->getItems()[1]->getBook()->getId() );
-
+        $this->assertTrue( $cart->includes($this->validProduct()));
+        $this->assertEquals( 2 , $cart->numberOf($this->validProduct()) );
     }
 
-    public function testCanAddBookWithQuantity()
+    public function testCanAddManyProductsAtTheSameTime(){
+        $cart = $this->createCartWithCatalog();
+        $cart->add($this->validProduct(),2);
+        $this->assertEquals(2,$cart->numberOf($this->validProduct()));
+    }
+
+    /**
+     * @return string
+     */
+    public function validProduct(): string
     {
-        $cart = new Cart();
+        return "ISBN1";
+    }
 
-        $book1 = new Book(1);
+    /**
+     * @return string
+     */
+    public function invalidProduct(): string
+    {
+        return "ISBN2";
+    }
 
-        $cart->addBook($book1, 10);
+    /**
+     * @return string[]
+     */
+    public function catalog(): array
+    {
+        return array($this->validProduct());
+    }
 
-        $items = $cart->getItems();
-
-        $this->assertEquals( 10, $items[0]->getQuantity() );
-
+    /**
+     * @return Cart
+     */
+    public function createCartWithCatalog(): Cart
+    {
+        return new Cart($this->catalog());
     }
 
 }
