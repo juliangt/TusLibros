@@ -8,9 +8,9 @@ class CashierAsPerson
     /**
      * @var array
      */
-    private array $salesBook;
-    private DateTime $today;
-    private MerchantProcessor $merchantProcessor;
+    private $salesBook;
+    private $today;
+    private $merchantProcessor;
 
     /**
      * CashierAsPerson constructor.

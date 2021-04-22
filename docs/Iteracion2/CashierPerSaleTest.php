@@ -2,6 +2,8 @@
 
 require_once 'CartTest.php';
 require_once 'CashierPerSale.php';
+require_once 'MerchantProcessor.php';
+
 use PHPUnit\Framework\TestCase;
 
 

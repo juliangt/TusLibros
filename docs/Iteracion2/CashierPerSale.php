@@ -6,11 +6,11 @@ class CashierPerSale
     const CAN_NOT_CHECKOUT_EMPTY_CART = "Can not checkout an empty cart";
     const CAN_NOT_CHECKOUT_WITH_EXPIRED_CREDIT_CARD = "Can not checkout with expired credit card";
     const CAN_CHECKOUT_ONLY_ONCE = "Can checkout only once";
-    private Cart $cart;
-    private bool $checkedOut;
-    private CreditCard $creditCard;
-    private MerchantProcessor $merchantProcessor;
-    private array $salesBook;
+    private $cart;
+    private $checkedOut;
+    private $creditCard;
+    private $merchantProcessor;
+    private $salesBook;
 
     /**
      * CashierPerSale constructor.

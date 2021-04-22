@@ -6,7 +6,7 @@ class CreditCard
 {
     const INVALID_NUMBER = "Number must be 16 digits";
     const INVALID_NAME = "Name can not be empty";
-    private MonthOfYear $expirationDate;
+    private $expirationDate;
 
     /**
      * CreditCard constructor.
