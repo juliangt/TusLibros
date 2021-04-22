@@ -9,7 +9,7 @@ class SupermarketTestObjects
     /**
      * @return Cart
      */
-    public function createCartWithCatalog()
+    public function createCartWithCatalog() : Cart
     {
         $catalog = array($this->validProduct() => $this->validProductPrice());
         return new Cart($catalog);
