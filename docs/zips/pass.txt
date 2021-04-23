@@ -1,0 +1,10 @@
+les paso lo links y passwords del curso.
+Encuesta: https://forms.gle/mwvNK2fMFuG6XJXt7
+
+Passwords:
+Numeros Romanos: Romanos-TDD
+Tus Libros Iteración 1: tuslibros1
+Tus Libros Iteración 2: cajeroloco
+TusLibros Iteración 3: fin
+HolidayCalendar: calendarioGregoriano
+GameOfLife: lavidaesunjuego
